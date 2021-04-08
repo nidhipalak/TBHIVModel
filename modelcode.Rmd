@@ -1,0 +1,68 @@
+---
+title: "Model Code"
+author: "Nidhi Patel"
+date: "4/8/2021"
+output: html_document
+---
+
+```{r}
+library(deSolve)
+```
+
+```{r}
+HIVTB = function(time, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dS = caplambda - (beta*c*S*(I+J3)/N) - lambda*sigma*S*(Jas/R) - mu*S
+    dL = beta*c * (S + T)*(I+J3)/N - lambda*sigma*L*(Jas/R) - ( mu+k+r1)*L
+    dI = k*L - (mu+d+r2)*I
+    dT = r1*L + r2*I - beta*c*T*(I+J3)/N - lambda*sigma*T*(Jas/R) - mu*T
+    dJ1 = lambda*sigma(S+T)*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu)*J1 + ras*J2
+    dJ2 = lambda*sigma*L*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu+kas+ras)*J2
+    dJ3 = kas*J2 - (alpha3 + mu + das)*J3
+    dA = alpha1*J1 + alpha2*J2 + alpha3*J3 - (mu+f)*A
+    list(c(dS, dL, dI, dT, dJ1, dJ2, dA))
+  })
+}
+```
+
+Parameters:
+
+```{r}
+params = c(
+S = 
+L = 
+I = 
+T = 
+J1 = 
+J2 = 
+J3 = 
+A = 
+
+N = 
+R = 
+Jas = 
+caplambda = 
+c = 
+sigma = 
+mu = 
+k = 
+kas = 
+d = 
+das = 
+f = 
+r1 = 
+r2 = 
+ras = 
+alpha1 = 
+alpha2 = 
+alpha3 = 
+)
+```
+
+
+```{r}
+times=seq(1,1000*365,by=1)
+
+sim=ode(y=state,times=times,func=HIVTB,parms=params)
+```
+
