@@ -13,10 +13,10 @@ library(deSolve)
 HIVTB = function(time, state, parameters) {
   with(as.list(c(state, parameters)), {
     dS = caplambda - (beta*c*S*(I+J3)/N) - lambda*sigma*S*(Jas/R) - mu*S
-    dL = beta*c * (S + T)*(I+J3)/N - lambda*sigma*L*(Jas/R) - ( mu+k+r1)*L
+    dL = beta*c * (S + Tb)*(I+J3)/N - lambda*sigma*L*(Jas/R) - ( mu+k+r1)*L
     dI = k*L - (mu+d+r2)*I
-    dT = r1*L + r2*I - beta*c*T*(I+J3)/N - lambda*sigma*T*(Jas/R) - mu*T
-    dJ1 = lambda*sigma(S+T)*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu)*J1 + ras*J2
+    dT = r1*L + r2*I - beta*c*Tb*(I+J3)/N - lambda*sigma*Tb*(Jas/R) - mu*Tb
+    dJ1 = lambda*sigma(S+Tb)*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu)*J1 + ras*J2
     dJ2 = lambda*sigma*L*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu+kas+ras)*J2
     dJ3 = kas*J2 - (alpha3 + mu + das)*J3
     dA = alpha1*J1 + alpha2*J2 + alpha3*J3 - (mu+f)*A
@@ -28,22 +28,25 @@ HIVTB = function(time, state, parameters) {
 Parameters:
 
 ```{r}
-params = c(
-S = 
-<<<<<<< HEAD
+state = c(
+S = 1,
 L = 1333890.72,
-I = 
-T = 
+I = 1,
+Tb = 1,
 J1 = 72300,
-J2 = 
+J2 = 1,
 J3 = 4700,
-A = 0.166,
+A = 0.166
+)
 
+times=1:(365*10)
+
+params = c(
 N = 8336817,
-R = 
+R = 1,
 Jas = 77000,
-caplambda = 
-c = 
+caplambda = 1,
+c = 1,
 sigma = 0.009,
 mu = 555.1,
 k = 0.09,
@@ -53,38 +56,10 @@ das = 0.0047,
 f = 21.35,
 r1 = 70,
 r2 = 0.921,
-ras =
+ras =1,
 alpha1 = 0.0023,
 alpha2 = 0.0023,
 alpha3 = 0.0023
-=======
-L = 
-I = 
-T = 
-J1 = 
-J2 = 
-J3 = 
-A = 
-
-N = 
-R = 
-Jas = 
-caplambda = 
-c = 
-sigma = 
-mu = 
-k = 
-kas = 
-d = 
-das = 
-f = 
-r1 = 
-r2 = 
-ras = 
-alpha1 = 
-alpha2 = 
-alpha3 = 
->>>>>>> 12e30b2d5c816d6c40863e51ba3af8dd3270b6db
 )
 ```
 
