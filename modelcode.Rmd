@@ -15,18 +15,19 @@ HIVTB = function(time, state, parameters) {
     dS = caplambda - (beta*c*S*(I+J3)/N) - lambda*sigma*S*(Jas/R) - mu*S
     dL = beta*c * (S + Tb)*(I+J3)/N - lambda*sigma*L*(Jas/R) - ( mu+k+r1)*L
     dI = k*L - (mu+d+r2)*I
-    dT = r1*L + r2*I - beta*c*Tb*(I+J3)/N - lambda*sigma*Tb*(Jas/R) - mu*Tb
-    dJ1 = lambda*sigma(S+Tb)*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu)*J1 + ras*J2
+    dTb = r1*L + r2*I - beta*c*Tb*(I+J3)/N - lambda*sigma*Tb*(Jas/R) - mu*Tb
+    dJ1 = lambda*sigma*(S+Tb)*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu)*J1 + ras*J2
     dJ2 = lambda*sigma*L*(Jas/R) - beta*c*J1*(I+J3)/N - (alpha1 + mu+kas+ras)*J2
     dJ3 = kas*J2 - (alpha3 + mu + das)*J3
     dA = alpha1*J1 + alpha2*J2 + alpha3*J3 - (mu+f)*A
-    list(c(dS, dL, dI, dT, dJ1, dJ2, dA))
+    list(c(dS, dL, dI, dTb, dJ1, dJ2, dJ3, dA))
   })
 }
 ```
 
 Parameters:
 
+**if = 1, we have not found a parameter we like (yet)
 ```{r}
 state = c(
 S = 1,
@@ -46,6 +47,8 @@ N = 8336817,
 R = 1,
 Jas = 77000,
 caplambda = 1,
+beta = 1,
+lambda = 1,
 c = 1,
 sigma = 0.009,
 mu = 555.1,
@@ -65,8 +68,6 @@ alpha3 = 0.0023
 
 
 ```{r}
-times=seq(1,1000*365,by=1)
-
 sim=ode(y=state,times=times,func=HIVTB,parms=params)
 ```
 
