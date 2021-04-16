@@ -30,6 +30,7 @@ Parameters:
 ```{r}
 params = c(
 S = 
+<<<<<<< HEAD
 L = 1333890.72,
 I = 
 T = 
@@ -56,6 +57,34 @@ ras =
 alpha1 = 0.0023,
 alpha2 = 0.0023,
 alpha3 = 0.0023
+=======
+L = 
+I = 
+T = 
+J1 = 
+J2 = 
+J3 = 
+A = 
+
+N = 
+R = 
+Jas = 
+caplambda = 
+c = 
+sigma = 
+mu = 
+k = 
+kas = 
+d = 
+das = 
+f = 
+r1 = 
+r2 = 
+ras = 
+alpha1 = 
+alpha2 = 
+alpha3 = 
+>>>>>>> 12e30b2d5c816d6c40863e51ba3af8dd3270b6db
 )
 ```
 
