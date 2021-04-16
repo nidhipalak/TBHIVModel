@@ -29,21 +29,27 @@ Parameters:
 
 **if = 1, we have not found a parameter we like (yet)
 ```{r}
+N = 8336817
+L = 1333890.72
+J1 = 72300
+J2 = 1
+J3 = 4700
+
 state = c(
-S = 1,
-L = 1333890.72,
-I = 1,
+S = N - L - J1 - J2 - J3 ,
+L = L,
+I = (6.9/100000)*(N),
 Tb = 1,
-J1 = 72300,
-J2 = 1,
-J3 = 4700,
+J1 = J1,
+J2 = J2,
+J3 = J3,
 A = 0.166
 )
 
 times=1:(365*10)
 
 params = c(
-N = 8336817,
+N = N,
 R = 1,
 Jas = 77000,
 caplambda = 1,
