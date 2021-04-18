@@ -1,0 +1,140 @@
+---
+title: "TBHIV"
+author: "Nidhi Patel"
+date: "4/18/2021"
+output: html_document
+---
+
+```{r}
+library(deSolve)
+```
+
+```{r}
+HIVTB = function(time, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dS = caplambda - (betac*S*(I+J3)/N) - lambda*sigma*S*(Jas/R) - mu*S
+    dL = betac * (S + Tb)*(I+J3)/N - lambda*sigma*L*(Jas/R) - (mu+k+r1)*L
+    dI = k*L - (mu+d+r2)*I
+    dTb = r1*L + r2*I - betac*Tb*(I+J3)/N - lambda*sigma*Tb*(Jas/R) - mu*Tb
+    dJ1 = lambda*sigma*(S+Tb)*(Jas/R) - betac*J1*(I+J3)/N - (alpha1 + mu)*J1 + ras*J2
+    dJ2 = lambda*sigma*L*(Jas/R) + betac*J1*(I+J3)/N - (alpha1 + mu+kas+ras)*J2
+    dJ3 = kas*J2 - (alpha3 + mu + das)*J3
+    dA = alpha1*J1 + alpha2*J2 + alpha3*J3 - (mu+f)*A
+    list(c(dS, dL, dI, dTb, dJ1, dJ2, dJ3, dA))
+  })
+}
+```
+
+Parameters:
+
+```{r}
+# TN = 8336817
+# N = .825 * TN
+# L = 0.016 * N
+# I = 6.9/100000 * N
+# Tb = 0.82 * I
+# J1 = .23*(1458/100000) * N
+# J2 = .14*J1
+# J3 = 0.6 * I
+# A = 0.166 * J1
+# R = N - I - J3 - A
+# gamma = .95
+# R0 = 1.7
+# 
+# state = c(
+# S = N - L - J1 - J2 - J3 ,
+# L = L,
+# I = I,
+# Tb = Tb,
+# J1 = J1,
+# J2 = J2,
+# J3 = J3,
+# A = A
+# )
+# 
+# times=1:10
+# 
+# params = c(
+# N = N,
+# R = R,
+# Jas = J1 + J2 + J3,
+# caplambda = (.175*TN)/15,
+# beta = R0 * gamma,
+# lambda = 4.025/100000,
+# c = (10 * I) / R, # what do we multiply this with!!!!??
+# sigma = 0.009/100000 ,
+# mu = 555.1/100000 ,
+# k = 0.08,
+# kas = 0.1,
+# d = 0.9,
+# das = 4.7/1000 ,
+# f = 21.35/100000 ,
+# r1 = 0.78 ,
+# r2 = 0.82 ,
+# ras = 1,
+# alpha1 = 10/100000 ,
+# alpha2 = 0.25 ,
+# alpha3 = 0.25
+# )
+```
+
+Parameter change based on paper:
+```{r}
+TN = 8336817
+N = .825 * TN
+L = 0.016 * N
+I = 6.9/100000 * N
+Tb = 0.82 * I
+J1 = .23*(1458/100000) * N
+J2 = .14*J1
+J3 = 0.6 * I
+A = 0.166 * J1
+R = N - I - J3 - A
+gamma = .95
+R0 = 1.7
+
+state = c(
+S = N - L - J1 - J2 - J3 ,
+L = L,
+I = I,
+Tb = Tb,
+J1 = J1,
+J2 = J2,
+J3 = J3,
+A = A
+)
+
+times=1:10
+
+params = c(
+N = N,
+R = R,
+Jas = J1 + J2 + J3,
+ caplambda = (.175*TN)/15,
+ betac = 10,
+ lambda = 4.025/100000,
+# c = (10 * I) / R,
+ sigma = 0.009/100000 ,
+ mu = 0.0143,
+ k = 0.5,
+ kas = 5*0.5,
+ d = 0.1,
+ das = 0.2 ,
+ f = 0.5 ,
+ r1 = 3 ,
+ r2 = 1 ,
+ ras = 3,
+ alpha1 = 0.1 ,
+ alpha2 = 0.2 ,
+ alpha3 = 0.5
+  )
+```
+
+```{r}
+sim=ode(y=state,times=times,func=HIVTB,parms=params)
+```
+
+```{r}
+matplot(sim[,6:8], type = 'l', lty = 6:8, col = c('red', 'green', 'blue'), xlab = 'Time', ylab = 'TB')
+legend('topright', c('J1', 'J2', 'J3'), lty = 6:8, col = c('red', 'green', 'blue'))
+```
