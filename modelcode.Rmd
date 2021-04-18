@@ -84,3 +84,8 @@ alpha3 = 0.25
 sim=ode(y=state,times=times,func=HIVTB,parms=params)
 ```
 
+```{r}
+matplot(sim[,6:8], type = 'l', lty = 6:8, col = c('red', 'green', 'blue'), xlab = 'Time', ylab = 'TB')
+legend('topright', c('J1', 'J2', 'J3'), lty = 6:8, col = c('red', 'green', 'blue'))
+```
+
