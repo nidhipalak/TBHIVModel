@@ -50,6 +50,7 @@ server <- function(input, output){
     lambda=input$lambda
 
     
+    
     # other parameters and initial conditions
     TN = 8336817; N = .825 * TN; L = 0.16 * N; I = 6.9/100000 * N;
     Tb = 0.82 * I; J1 = 1458/100000 *N; J2 = .14*J1; J3 = 0.6 * I;
